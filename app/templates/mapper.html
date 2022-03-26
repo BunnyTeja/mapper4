@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+Python button script
+</title>
+<style>
+    table, th, td {
+      border:0px solid black;
+      text-align: center;
+    }
+    
+.centerv {
+  text-align: center;
+  color: rgb(153, 41, 41);
+}
+.center {
+  text-align: center;
+}
+h1 {
+  font-size: 30px;
+}
+h2 {
+  font-size: 40px;
+}
+.centert {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+</style>
+</head>
+<body style="background-color:rgb(232, 248, 246);">  
+
+
+<h1 class=" centerv">Text to Classification Mapper</h1>
+<form name ="map" action="." method ="post">
+  
+    <input type="text" name="inputtext" value="data mining">
+    <h3>Enter text here</h3>
+    <br><br>
+    <input type="number" name="threshold" value = 65 >
+    <h3>Enter matching threshold</h3>
+    <br><br>
+    <h3>Select Tree for Classification</h3>
+    <input type="radio" id="html" name="tree" value="ACM" checked >
+    <label for="html">ACM</label><br>
+    <br><br>
+    <input type="submit" value="Find Concepts"> 
+    </form>
+
+</body>
+</html>
