@@ -8,6 +8,7 @@ import pickle
 #import spacy
 # Calculate Levenshtein distance
 import nltk
+nltk.download('punkt')
 from nltk import word_tokenize
 from nltk.util import ngrams
 import re
