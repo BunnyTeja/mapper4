@@ -104,7 +104,7 @@ def get_codes_class(text, term_to_code, code_to_term, triee, ngram_depth = 7, si
                             for k in range(len(el)):
                                 done[j + k] = 1
                             if to_print == 1:
-                                 print(temp, ',', nearest, ',', similarity, ',', j, ',', term_to_code[term])
+                                #  print(temp, ',', nearest, ',', similarity, ',', j, ',', term_to_code[term])
                                  return(term_to_code[term],similarity)
                             ans[term] = ans.get(term, 0) + 1
     
@@ -218,8 +218,8 @@ term_to_code, code_to_term, trie = initialize()
 #              'learn', 'mach. learning', 'data mining' ]
 # for text in text_list:
 #     print ("--", text)
-code = get_codes_class("insure", term_to_code, code_to_term, trie, 7, 65, 1)
-print (code)
+# code = get_codes_class("insure", term_to_code, code_to_term, trie, 7, 65, 1)
+# print (code)
 
 
 from flask import Flask, render_template, request
@@ -233,11 +233,14 @@ def index():
 def getValue():
     it=request.form["inputtext"]
     th=request.form["threshold"]
-    print(it)
-    print(th)
+    # print(it)
+    # print(th)
     code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
-    print(code)
-    return(render_template("pass.html",inputtext=code[0], threshold=code[1]))
+    # print(code)
+    if code != None:
+        return(render_template("pass.html",term=code[0], score=code[1], closest ="Closest"))
+    else: 
+        return(render_template("pass.html",term="Not matching",score=0, closest ="Not Closest"))
 
 
 
