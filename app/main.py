@@ -233,14 +233,15 @@ def index():
 def getValue():
     it=request.form["inputtext"]
     th=request.form["threshold"]
-    # print(it)
-    # print(th)
+    print(it)
+    print(th)
     code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
-    # print(code)
+    print(type(code))
+    acmlist = list(code[0])
     if code != None:
-        return(render_template("pass.html",term=code[0], score=code[1], closest ="Closest"))
+        return(render_template("mapper.html",term=acmlist[0], score=code[1], closest ="Closest", input = it))
     else: 
-        return(render_template("pass.html",term="Not matching",score=0, closest ="Not Closest"))
+        return(render_template("mapper.html",term="Not matching",score=0, closest ="Not Closest"))
 
 
 
