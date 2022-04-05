@@ -39,35 +39,36 @@ h2 {
   
     <input type="text" name="inputtext" value="artificial intelligence">
     <h3>Enter text here</h3>
-    <br><br>
+    <br>
     <input type="number" name="threshold" value = 65 >
     <h3>Enter matching threshold</h3>
-    <br><br>
+    <br>
     <h3>Select Tree for Classification</h3>
     <input type="radio" id="html" name="tree" value="ACM" checked >
     <label for="html">ACM</label><br>
-    <br><br>
+    <br>
     <input type="submit" value="Find Concepts"> 
     </form>
     {% if score %}
-    <h2 class = center>Input text - {{input}}</h2>
+    <h3 class = center>Input text - {{input}}</h3>
     
     <!-- <h2 class = center>Score</h2> -->
-    <h2 class = center>Score - {{score}}</h2>
+    <h3 class = center>Score - {{score}}</h3>
     <br>
     <table class="centert" >
       <tr>
       
-        <th><h2>Closest matching concepts </h2></th>
+        <th><h3>Closest matching concepts </h3></th>
         <!-- <th><h2>Score</h2></th> -->
       </tr>
+      {% for i in term %} 
         <tr>
          
-          <td><h2>{{term}}</h2></td>
+          <td><h3>{{i}}</h3></td>
           <!-- <td><h2>{{score}}</h2></td> -->
          
         </tr>
-       
+        {% endfor %}
       </table>
      
       {% endif %}

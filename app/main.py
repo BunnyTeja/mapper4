@@ -238,8 +238,9 @@ def getValue():
     code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
     print(type(code))
     acmlist = list(code[0])
+    number = len(acmlist)
     if code != None:
-        return(render_template("mapper.html",term=acmlist[0], score=code[1], closest ="Closest", input = it))
+        return(render_template("mapper.html",term=acmlist, score=code[1], closest ="Closest", input = it))
     else: 
         return(render_template("mapper.html",term="Not matching",score=0, closest ="Not Closest"))
 
