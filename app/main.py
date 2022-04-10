@@ -31,6 +31,7 @@ def get_trie(m1):
             temp = temp[letter]
         temp['__end__'] = m1[word]
     return trie
+    print(tire)
 
 
 # Return the closest string to the word in the trie
@@ -109,88 +110,88 @@ def get_codes_class(text, term_to_code, code_to_term, triee, ngram_depth = 7, si
                             ans[term] = ans.get(term, 0) + 1
     
 
-    #     # Rest of the code decides what to do in case a term belongs to 2 codes
-    #     final = {}
-    #     codes = {}
-    #     for key in list(ans.keys()):
-    #         if len(term_to_code[key]) == 1:
-    #             final[(key, list(term_to_code[key])[0])] = ans[key]
-    #             s = list(term_to_code[key])[0]
-    #             codes[s] = codes.get(s, 0) + 1
-    #             if s.count('.') >= 1:
-    #                 t = s[:s.find('.')]
-    #                 codes[t] = codes.get(t, 0) + 1
-    #             if s.count('.') >= 2:
-    #                 x = [m.start() for m in re.finditer('\.', s)]
-    #                 t = s[:x[-1]]
-    #                 codes[t] = codes.get(t, 0) + 1
-    #     for key in list(ans.keys()):
-    #         if len(term_to_code[key]) == 1:
-    #             continue
-    #         lengths = []
-    #         for el in term_to_code[key]:
-    #             lengths.append(codes.get(el, 0))
-    #         lengths.sort()
-    #         if lengths[-1] != lengths[-2]:
-    #             for el in term_to_code[key]:
-    #                 if codes.get(el, 0) == lengths[-1]:
-    #                     final[(key, el)] = ans[key]
-    #                     break
-    #         else:
-    #             keys = []
-    #             for el in term_to_code[key]:
-    #                 if el.count('.') >= 1:
-    #                     x = [m.start() for m in re.finditer('\.', el)]
-    #                     keys.append(el[:x[-1]])
-    #                 else:
-    #                     keys.append(el)
-    #             lengths = []
-    #             for el in keys:
-    #                 lengths.append(codes.get(el, 0))
-    #             lengths.sort()
-    #             if lengths[-1] != lengths[-2]:
-    #                 for i, el in enumerate(keys):
-    #                     if codes.get(el, 0) == lengths[-1]:
-    #                         final[(key, list(term_to_code[key])[i])] = ans[key]
-    #                         break
-    #             else:
-    #                 temp = []
-    #                 for el in keys:
-    #                     if el.count('.') >= 1:
-    #                         x = [m.start() for m in re.finditer('\.', el)]
-    #                         temp.append(el[:x[-1]])
-    #                     else:
-    #                         temp.append(el)
-    #                 keys = temp
-    #                 lengths = []
-    #                 for el in keys:
-    #                     lengths.append(codes.get(el, 0))
-    #                 lengths.sort()
-    #                 if lengths[-1] != lengths[-2]:
-    #                     for i, el in enumerate(keys):
-    #                         if codes.get(el, 0) == lengths[-1]:
-    #                             final[(key, list(term_to_code[key])[i])] = ans[key]
-    #                             break
-    #                 else:
-    #                     final[(key, list(term_to_code[key])[-1])] = ans[key]
-    #     codes = {}
-    #     title = {}
-    #     for key in list(final.keys()):
-    #         title[key[1][0]] = title.get(key[1][0], 0) + 1
-    #     letter = max(title, key=lambda x: title[x])
-    #     title = code_to_term[letter]
-    #     final_codes = sorted(list(final.keys()), key=lambda x: final[x], reverse=True)[:10]
-    #     areas = {}
-    #     codes = {}
-    #     for i, code in enumerate(final_codes):
-    #         codes[code[1]] = final[code]
-    #         areas[code_to_term[code[1]]] = codes[code[1]]
+        # Rest of the code decides what to do in case a term belongs to 2 codes
+        final = {}
+        codes = {}
+        for key in list(ans.keys()):
+            if len(term_to_code[key]) == 1:
+                final[(key, list(term_to_code[key])[0])] = ans[key]
+                s = list(term_to_code[key])[0]
+                codes[s] = codes.get(s, 0) + 1
+                if s.count('.') >= 1:
+                    t = s[:s.find('.')]
+                    codes[t] = codes.get(t, 0) + 1
+                if s.count('.') >= 2:
+                    x = [m.start() for m in re.finditer('\.', s)]
+                    t = s[:x[-1]]
+                    codes[t] = codes.get(t, 0) + 1
+        for key in list(ans.keys()):
+            if len(term_to_code[key]) == 1:
+                continue
+            lengths = []
+            for el in term_to_code[key]:
+                lengths.append(codes.get(el, 0))
+            lengths.sort()
+            if lengths[-1] != lengths[-2]:
+                for el in term_to_code[key]:
+                    if codes.get(el, 0) == lengths[-1]:
+                        final[(key, el)] = ans[key]
+                        break
+            else:
+                keys = []
+                for el in term_to_code[key]:
+                    if el.count('.') >= 1:
+                        x = [m.start() for m in re.finditer('\.', el)]
+                        keys.append(el[:x[-1]])
+                    else:
+                        keys.append(el)
+                lengths = []
+                for el in keys:
+                    lengths.append(codes.get(el, 0))
+                lengths.sort()
+                if lengths[-1] != lengths[-2]:
+                    for i, el in enumerate(keys):
+                        if codes.get(el, 0) == lengths[-1]:
+                            final[(key, list(term_to_code[key])[i])] = ans[key]
+                            break
+                else:
+                    temp = []
+                    for el in keys:
+                        if el.count('.') >= 1:
+                            x = [m.start() for m in re.finditer('\.', el)]
+                            temp.append(el[:x[-1]])
+                        else:
+                            temp.append(el)
+                    keys = temp
+                    lengths = []
+                    for el in keys:
+                        lengths.append(codes.get(el, 0))
+                    lengths.sort()
+                    if lengths[-1] != lengths[-2]:
+                        for i, el in enumerate(keys):
+                            if codes.get(el, 0) == lengths[-1]:
+                                final[(key, list(term_to_code[key])[i])] = ans[key]
+                                break
+                    else:
+                        final[(key, list(term_to_code[key])[-1])] = ans[key]
+        codes = {}
+        title = {}
+        for key in list(final.keys()):
+            title[key[1][0]] = title.get(key[1][0], 0) + 1
+        print("title",title)
+        letter = max(title, key=lambda x: title[x])
+        title = code_to_term[letter]
+        final_codes = sorted(list(final.keys()), key=lambda x: final[x], reverse=True)[:10]
+        areas = {}
+        codes = {}
+        for i, code in enumerate(final_codes):
+            codes[code[1]] = final[code]
+            areas[code_to_term[code[1]]] = codes[code[1]]
 
-    #     # Letter is the Code for the Letter with most codes (A-K)
-    #     # codes is a map from Classification Code to Frequency (Top 10 codes)
-    #     return (letter, codes)
-    # except:
-    #     return ("", {})
+        # Letter is the Code for the Letter with most codes (A-K)
+        # codes is a map from Classification Code to Frequency (Top 10 codes)
+        return (letter, codes)
+    
 
 
 # Initialize data structures
@@ -220,6 +221,23 @@ term_to_code, code_to_term, trie = initialize()
 #     print ("--", text)
 # code = get_codes_class("insure", term_to_code, code_to_term, trie, 7, 65, 1)
 # print (code)
+path = 'data/acm.csv'
+import re
+
+temp = []
+with open(path) as f:
+  for line in f:
+    if line != '\n':
+      temp.append(re.sub(' +', ' ', line).split(' '))
+
+from collections import defaultdict
+files_dict = defaultdict(dict)
+
+for i in temp:
+  if i[0] != '':
+    files_dict[str(i[0])] = ' '.join(i[1:])
+  else:
+    files_dict[ list(files_dict.keys())[-1] ] = files_dict[ list(files_dict.keys())[-1] ] + ' ' + ' '.join(i[1:])
 
 
 from flask import Flask, render_template, request
@@ -233,19 +251,32 @@ def index():
 def getValue():
     it=request.form["inputtext"]
     th=request.form["threshold"]
-    print(it)
+    print(type(it))
     print(th)
     code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
-    print(type(code))
-    acmlist = list(code[0])
-    number = len(acmlist)
+    print(code)
+    codelist = list(code[0])
+    print(codelist)
+    number = len(codelist)
+    # print(files_dict[codelist[2]].split('\n'))
+    lili = []
+    for i in range(len(codelist)):
+     lili.append(files_dict[codelist[i]].split('\n'))
+    print(lili)
+    length_list = list(range(0,number))
+    print(length_list)
+    
+    
     if code != None:
-        return(render_template("mapper.html",term=acmlist, score=code[1], closest ="Closest", input = it))
+        return(render_template("mapper.html",term=codelist, score=code[1], closest ="Closest", termslist =lili,length = length_list, itext = it, itresh = th))
     else: 
         return(render_template("mapper.html",term="Not matching",score=0, closest ="Not Closest"))
+    # print(terms)
+
+    
 
 
 
 
 
-#print (code_to_term)
+# print (code_to_term)
