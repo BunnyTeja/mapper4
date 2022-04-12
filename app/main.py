@@ -178,7 +178,7 @@ def get_codes_class(text, term_to_code, code_to_term, triee, ngram_depth = 7, si
         title = {}
         for key in list(final.keys()):
             title[key[1][0]] = title.get(key[1][0], 0) + 1
-        print("title",title)
+        # print("title",title)
         if title != {} :
          letter = max(title, key=lambda x: title[x])
          title = code_to_term[letter]
