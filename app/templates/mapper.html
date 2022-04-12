@@ -12,7 +12,7 @@ Mapper
     table
 {
   position:absolute;
-  top: 2.5cm;
+  top: 3.5cm;
   right: 2.5cm; 
   text-align: center;
 }
@@ -30,6 +30,13 @@ Mapper
   position:absolute;
   top: 1cm;
   right: 6cm;
+}
+.centerf {
+  color: red;
+  text-align: center;
+  position:absolute;
+  top: 2cm;
+  right: 4cm;
 }
 .centers {
   color: green;
@@ -126,5 +133,44 @@ h2 {
       </table>
      
       {% endif %}
+       
+    {% if full%}
+
+      <h3 class = centerf>"Could not find any match with the input text and threshold - Displaying the entire ACM tree"</h3>
+    <br>
+     <table border="1" 
+            align="right"> 
+      <tr>
+      
+        <th><h3>Code</h3></th>
+       
+        <th><h3>Description</h3></th>
+      </tr>
+      
+       {% for i in flength %} 
+      
+        <tr>
+         
+          <td><h3>{{fterm[i]}}</h3></td>
+          <td>
+            
+             {% for j in ftermslist[i] %} 
+            
+             <h3 class = "left">{{j}}</h3>
+             
+             {% endfor %}
+            
+          </td>
+         
+         
+        </tr>
+           
+        {% endfor %}
+      
+      </table>
+      {% endif %}
+     
+
+
 </body>
 </html>

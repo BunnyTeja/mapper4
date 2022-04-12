@@ -179,19 +179,20 @@ def get_codes_class(text, term_to_code, code_to_term, triee, ngram_depth = 7, si
         for key in list(final.keys()):
             title[key[1][0]] = title.get(key[1][0], 0) + 1
         print("title",title)
-        letter = max(title, key=lambda x: title[x])
-        title = code_to_term[letter]
-        final_codes = sorted(list(final.keys()), key=lambda x: final[x], reverse=True)[:10]
-        areas = {}
-        codes = {}
-        for i, code in enumerate(final_codes):
+        if title != {} :
+         letter = max(title, key=lambda x: title[x])
+         title = code_to_term[letter]
+         final_codes = sorted(list(final.keys()), key=lambda x: final[x], reverse=True)[:10]
+         areas = {}
+         codes = {}
+         for i, code in enumerate(final_codes):
             codes[code[1]] = final[code]
             areas[code_to_term[code[1]]] = codes[code[1]]
 
         # Letter is the Code for the Letter with most codes (A-K)
         # codes is a map from Classification Code to Frequency (Top 10 codes)
-        return (letter, codes)
-    
+         return (letter, codes)
+     
 
 
 # Initialize data structures
@@ -238,7 +239,8 @@ for i in temp:
     files_dict[str(i[0])] = ' '.join(i[1:])
   else:
     files_dict[ list(files_dict.keys())[-1] ] = files_dict[ list(files_dict.keys())[-1] ] + ' ' + ' '.join(i[1:])
-
+# print(list(files_dict.values()))
+# print(list(files_dict.keys()))
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
@@ -251,27 +253,37 @@ def index():
 def getValue():
     it=request.form["inputtext"]
     th=request.form["threshold"]
-    print(type(it))
-    print(th)
+    # print(type(it))
+    # print(th)
     code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
-    print(code)
-    codelist = list(code[0])
-    print(codelist)
-    number = len(codelist)
-    # print(files_dict[codelist[2]].split('\n'))
-    lili = []
-    for i in range(len(codelist)):
-     lili.append(files_dict[codelist[i]].split('\n'))
-    print(lili)
-    length_list = list(range(0,number))
-    print(length_list)
-    
-    
+    # print(code)
     if code != None:
-        return(render_template("mapper.html",term=codelist, score=code[1], closest ="Closest", termslist =lili,length = length_list, itext = it, itresh = th))
+     codelist = list(code[0])
+    #  print(codelist)
+     number = len(codelist)
+     lili = []
+     for i in range(len(codelist)):
+      lili.append(files_dict[codelist[i]].split('\n'))
+    #  print(lili)
+     length_list = list(range(0,number))
+    #  print(length_list)
+    
+    
+    # if code != None:
+     return(render_template("mapper.html",term=codelist, score=code[1], closest ="Closest", termslist =lili,length = length_list, itext = it, itresh = th))
     else: 
-        return(render_template("mapper.html",term="Not matching",score=0, closest ="Not Closest"))
+        fcodelist = list(files_dict.keys())
+        # print(fcodelist)
+        fnumber = len(fcodelist)
+        flili = []
+        for i in range(len(fcodelist)):
+            flili.append(files_dict[fcodelist[i]].split('\n'))
+        # print(flili)
+        flength_list = list(range(0,fnumber))
+        # print(flength_list)
+        return(render_template("mapper.html",fterm=fcodelist,full = "f", closest ="Closest", ftermslist =flili,flength = flength_list, itext = it, itresh = th))
     # print(terms)
+
 
     
 
