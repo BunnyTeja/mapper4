@@ -83,9 +83,12 @@ h2 {
     <h3>Enter matching threshold</h3>
     <br>
     <h3>Select Tree for Classification</h3>
-    <input type="radio" id="html" name="tree" value="ACM" checked >
-    <label for="html">ACM</label><br>
-    <br>
+    <select name="tree" id="tree">
+      <option selected disabled>Choose Tree</option>
+      <option value="acm">ACM</option>
+      <option value="jel">JEL</option>
+    </select>
+    <br><br>
     <input type="submit" value="Find Concepts"> 
    
     </form>
@@ -136,7 +139,7 @@ h2 {
        
     {% if full%}
 
-      <h3 class = centerf>Could not find any match with the given Input text and Threshold - Displaying the entire ACM tree</h3>
+      <h3 class = centerf>Could not find any match with the given Input text and Threshold - Displaying the entire tree</h3>
     <br>
      <table border="1" 
             align="right"> 

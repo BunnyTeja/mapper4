@@ -194,7 +194,6 @@ def get_codes_class(text, term_to_code, code_to_term, triee, ngram_depth = 7, si
          return (letter, codes)
      
 
-
 # Initialize data structures
 def initialize():
 
@@ -204,16 +203,18 @@ def initialize():
 
     # A map from ACM Classification Terms to their corresponding codes
     term_to_code = pickle.load(open('data/term_to_code.pickle', 'rb'))
+    jel_term_to_code = pickle.load(open('data/jel_term_to_code.pk', 'rb'))
+    jel_code_to_term = pickle.load(open('data/jel_code_to_term.pk', 'rb'))
 
     # Convert the map term_to_code to a trie
-    trie = get_trie(term_to_code)
+    acm_trie = get_trie(term_to_code)
+    jel_trie = get_trie(jel_term_to_code)
 
-    return term_to_code, code_to_term, trie
-
+    return term_to_code, code_to_term, acm_trie, jel_term_to_code, jel_code_to_term, jel_trie
 
 # - main processing
 
-term_to_code, code_to_term, trie = initialize()
+term_to_code, code_to_term, acm_trie, jel_term_to_code, jel_code_to_term, jel_trie = initialize()
 #print (term_to_code)
 
 # text_list = ['general architecture', 'quality assurance', 'artificial intelligence', 'miscellaneous', 'systems', 'insurance',
@@ -242,6 +243,11 @@ for i in temp:
 # print(list(files_dict.values()))
 # print(list(files_dict.keys()))
 
+jel_dict = {}
+with open('data/jel_dict.pk', 'rb') as f:
+    jel_dict = pickle.load(f)
+jel_dict = defaultdict(dict, jel_dict)
+
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
@@ -253,17 +259,29 @@ def index():
 def getValue():
     it=request.form["inputtext"]
     th=request.form["threshold"]
-    # print(type(it))
-    # print(th)
-    code = get_codes_class(it, term_to_code, code_to_term, trie, 7, th, 1)
-    # print(code)
+    val = None
+    dict_req = {}
+    try:
+        val = request.form["tree"]
+    except:
+        val = None
+
+    print(it, th, val)
+
+    if val == 'acm':
+        code = get_codes_class(it, term_to_code, code_to_term, acm_trie, 7, th, 1)
+        dict_req = files_dict
+    elif val == 'jel':
+        code = get_codes_class(it, jel_term_to_code, jel_code_to_term, jel_trie, 7, th, 1)
+        dict_req = jel_dict
+   
     if code != None:
      codelist = list(code[0])
     #  print(codelist)
      number = len(codelist)
      lili = []
      for i in range(len(codelist)):
-      lili.append(files_dict[codelist[i]].split('\n'))
+      lili.append(dict_req[codelist[i]].split('\n'))
     #  print(lili)
      length_list = list(range(0,number))
     #  print(length_list)
@@ -271,13 +289,15 @@ def getValue():
     
     # if code != None:
      return(render_template("mapper.html",term=codelist, score=code[1], closest ="Closest", termslist =lili,length = length_list, itext = it, itresh = th))
+   
     else: 
-        fcodelist = list(files_dict.keys())
+       
+        fcodelist = list(dict_req.keys())
         # print(fcodelist)
         fnumber = len(fcodelist)
         flili = []
         for i in range(len(fcodelist)):
-            flili.append(files_dict[fcodelist[i]].split('\n'))
+            flili.append(dict_req[fcodelist[i]].split('\n'))
         # print(flili)
         flength_list = list(range(0,fnumber))
         # print(flength_list)
