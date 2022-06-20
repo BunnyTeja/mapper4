@@ -83,11 +83,10 @@ h2 {
     <h3>Enter matching threshold</h3>
     <br>
     <h3>Select Tree for Classification</h3>
-    <select name="tree" id="tree">
-      <option selected disabled>Choose Tree</option>
-      <option value="acm">ACM</option>
-      <option value="jel">JEL</option>
-    </select>
+    <input type="radio" id="acm" name="tree" value="acm" checked>
+    <label for="acm">ACM</label><br>
+    <input type="radio" id="jel" name="tree" value="jel">
+    <label for="jel">JEL</label>
     <br><br>
     <input type="submit" value="Find Concepts"> 
    
